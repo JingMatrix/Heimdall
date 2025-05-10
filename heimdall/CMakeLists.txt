@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.10.0...4.0.2)
 
 project(heimdall)
 
-find_package(libusb REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(libusb REQUIRED libusb-1.0)
 
 set(LIBPIT_INCLUDE_DIRS
     ../libpit/source)
@@ -19,8 +20,6 @@ endif(MINGW)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     add_definitions(-DOS_LINUX)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
-include_directories(SYSTEM ${LIBUSB_INCLUDE_DIRS})
 
 include_directories(${LIBPIT_INCLUDE_DIRS})
 
@@ -73,8 +72,12 @@ endif()
 add_executable(heimdall ${HEIMDALL_SOURCE_FILES})
 target_compile_features(heimdall PRIVATE cxx_std_11)
 
+include_directories(heimdall PUBLIC ${libusb_INCLUDE_DIRS})
+
 target_link_libraries(heimdall PRIVATE pit)
-target_link_libraries(heimdall PRIVATE ${LIBUSB_LIBRARIES})
-install (TARGETS heimdall
-    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+target_link_libraries(heimdall PUBLIC ${libusb_LIBRARIES})
+install (
+  TARGETS heimdall
+  RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
