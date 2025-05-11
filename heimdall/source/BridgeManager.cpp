@@ -480,6 +480,9 @@ int BridgeManager::Initialise(bool resume)
 		return (BridgeManager::kInitialiseFailed);
 	}
 
+	// Fixes LIBUSB_ERROR_NOT_FOUND when using dg_ssudbus driver instead of WinUSB.
+	libusb_set_option(libusbContext, LIBUSB_OPTION_USE_USBDK);
+
 	// Setup libusb log level.
 	SetUsbLogLevel(usbLogLevel);
 
