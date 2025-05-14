@@ -35,9 +35,6 @@ qt6_wrap_ui(HEIMDALL_FRONTEND_FORMS
     mainwindow.ui
     aboutform.ui)
 
-qt6_add_resources(HEIMDALL_FRONTEND_RESOURCES
-    mainwindow.qrc)
-
 add_executable(heimdall-frontend WIN32
     MACOSX_BUNDLE
     ${HEIMDALL_FRONTEND_SOURCE_FILES}
