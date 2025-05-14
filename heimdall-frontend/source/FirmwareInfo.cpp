@@ -51,7 +51,7 @@ bool DeviceInfo::ParseXml(QXmlStreamReader& xml)
 
 		if (nextToken == QXmlStreamReader::StartElement)
 		{
-			if (xml.name() == "manufacturer")
+			if (xml.name() == QStringLiteral("manufacturer"))
 			{
 				if (foundManufacturer)
 				{
@@ -63,7 +63,7 @@ bool DeviceInfo::ParseXml(QXmlStreamReader& xml)
 
 				manufacturer = xml.readElementText();
 			}
-			else if (xml.name() == "product")
+			else if (xml.name() == QStringLiteral("product"))
 			{
 				if (foundProduct)
 				{
@@ -75,7 +75,7 @@ bool DeviceInfo::ParseXml(QXmlStreamReader& xml)
 
 				product = xml.readElementText();
 			}
-			else if (xml.name() == "name")
+			else if (xml.name() == QStringLiteral("name"))
 			{
 				if (foundName)
 				{
@@ -95,7 +95,7 @@ bool DeviceInfo::ParseXml(QXmlStreamReader& xml)
 		}
 		else if (nextToken == QXmlStreamReader::EndElement)
 		{
-			if (xml.name() == "device")
+			if (xml.name() == QStringLiteral("device"))
 			{
 				if (foundManufacturer && foundProduct && foundName)
 				{
@@ -170,7 +170,7 @@ bool PlatformInfo::ParseXml(QXmlStreamReader& xml)
 
 		if (nextToken == QXmlStreamReader::StartElement)
 		{
-			if (xml.name() == "name")
+			if (xml.name() == QStringLiteral("name"))
 			{
 				if (foundName)
 				{
@@ -182,7 +182,7 @@ bool PlatformInfo::ParseXml(QXmlStreamReader& xml)
 
 				name = xml.readElementText();
 			}
-			else if (xml.name() == "version")
+			else if (xml.name() == QStringLiteral("version"))
 			{
 				if (foundVersion)
 				{
@@ -202,7 +202,7 @@ bool PlatformInfo::ParseXml(QXmlStreamReader& xml)
 		}
 		else if (nextToken == QXmlStreamReader::EndElement)
 		{
-			if (xml.name() == "platform")
+			if (xml.name() == QStringLiteral("platform"))
 			{
 				if (foundName && foundVersion)
 				{
@@ -266,7 +266,7 @@ bool FileInfo::ParseXml(QXmlStreamReader& xml)
 
 		if (nextToken == QXmlStreamReader::StartElement)
 		{
-			if (xml.name() == "id")
+			if (xml.name() == QStringLiteral("id"))
 			{
 				if (foundId)
 				{
@@ -278,7 +278,7 @@ bool FileInfo::ParseXml(QXmlStreamReader& xml)
 
 				partitionId = xml.readElementText().toInt();
 			}
-			else if (xml.name() == "filename")
+			else if (xml.name() == QStringLiteral("filename"))
 			{
 				if (foundFilename)
 				{
@@ -298,7 +298,7 @@ bool FileInfo::ParseXml(QXmlStreamReader& xml)
 		}
 		else if (nextToken == QXmlStreamReader::EndElement)
 		{
-			if (xml.name() == "file")
+			if (xml.name() == QStringLiteral("file"))
 			{
 				if (foundId && foundFilename)
 				{
@@ -395,7 +395,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 		return (false);
 	}
 
-	if (xml.name() != "firmware")
+	if (xml.name() != QStringLiteral("firmware"))
 	{
 		Alerts::DisplayError(QString("Expected <firmware> element but found <%1>.").arg(xml.name().toString()));
 		return (false);
@@ -431,7 +431,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 		if (nextToken == QXmlStreamReader::StartElement)
 		{
-			if (xml.name() == "name")
+			if (xml.name() == QStringLiteral("name"))
 			{
 				if (foundName)
 				{
@@ -442,7 +442,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 				foundName = true;
 				name = xml.readElementText();
 			}
-			else if (xml.name() == "version")
+			else if (xml.name() == QStringLiteral("version"))
 			{
 				if (foundVersion)
 				{
@@ -453,7 +453,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 				foundVersion = true;
 				version = xml.readElementText();
 			}
-			else if (xml.name() == "platform")
+			else if (xml.name() == QStringLiteral("platform"))
 			{
 				if (foundPlatform)
 				{
@@ -466,7 +466,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 				if (!platformInfo.ParseXml(xml))
 					return (false);
 			}
-			else if (xml.name() == "developers")
+			else if (xml.name() == QStringLiteral("developers"))
 			{
 				if (foundDevelopers)
 				{
@@ -482,7 +482,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 					if (nextToken == QXmlStreamReader::StartElement)
 					{
-						if (xml.name() == "name")
+						if (xml.name() == QStringLiteral("name"))
 						{
 							developers.append(xml.readElementText());
 						}
@@ -494,7 +494,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 					}
 					else if (nextToken == QXmlStreamReader::EndElement)
 					{
-						if (xml.name() == "developers")
+						if (xml.name() == QStringLiteral("developers"))
 							break;
 					}
 					else
@@ -507,7 +507,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 					}
 				}
 			}
-			else if (xml.name() == "url")
+			else if (xml.name() == QStringLiteral("url"))
 			{
 				if (foundUrl)
 				{
@@ -519,7 +519,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 				url = xml.readElementText();
 			}
-			else if (xml.name() == "donateurl")
+			else if (xml.name() == QStringLiteral("donateurl"))
 			{
 				if (foundDonateUrl)
 				{
@@ -531,7 +531,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 				donateUrl = xml.readElementText();
 			}
-			else if (xml.name() == "devices")
+			else if (xml.name() == QStringLiteral("devices"))
 			{
 				if (foundDevices)
 				{
@@ -547,7 +547,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 					if (nextToken == QXmlStreamReader::StartElement)
 					{
-						if (xml.name() == "device")
+						if (xml.name() == QStringLiteral("device"))
 						{
 							DeviceInfo deviceInfo;
 
@@ -564,7 +564,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 					}
 					else if (nextToken == QXmlStreamReader::EndElement)
 					{
-						if (xml.name() == "devices")
+						if (xml.name() == QStringLiteral("devices"))
 							break;
 					}
 					else
@@ -577,7 +577,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 					}
 				}
 			}
-			else if (xml.name() == "pit")
+			else if (xml.name() == QStringLiteral("pit"))
 			{
 				if (foundPit)
 				{
@@ -589,7 +589,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 				pitFilename = xml.readElementText();
 			}
-			else if (xml.name() == "repartition")
+			else if (xml.name() == QStringLiteral("repartition"))
 			{
 				if (foundRepartition)
 				{
@@ -601,7 +601,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 				repartition = (xml.readElementText().toInt() != 0);
 			}
-			else if (xml.name() == "noreboot")
+			else if (xml.name() == QStringLiteral("noreboot"))
 			{
 				if (foundNoReboot)
 				{
@@ -613,7 +613,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 				noReboot = (xml.readElementText().toInt() != 0);
 			}
-			else if (xml.name() == "files")
+			else if (xml.name() == QStringLiteral("files"))
 			{
 				if (foundFiles)
 				{
@@ -629,7 +629,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 
 					if (nextToken == QXmlStreamReader::StartElement)
 					{
-						if (xml.name() == "file")
+						if (xml.name() == QStringLiteral("file"))
 						{
 							FileInfo fileInfo;
 
@@ -646,7 +646,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 					}
 					else if (nextToken == QXmlStreamReader::EndElement)
 					{
-						if (xml.name() == "files")
+						if (xml.name() == QStringLiteral("files"))
 							break;
 					}
 					else
@@ -667,7 +667,7 @@ bool FirmwareInfo::ParseXml(QXmlStreamReader& xml)
 		}
 		else if (nextToken == QXmlStreamReader::EndElement)
 		{
-			if (xml.name() == "firmware")
+			if (xml.name() == QStringLiteral("firmware"))
 			{
 				if (!(foundName && foundVersion && foundPlatform && foundDevelopers && foundDevices && foundPit && foundRepartition && foundNoReboot && foundFiles))
 				{
