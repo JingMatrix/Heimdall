@@ -38,7 +38,7 @@ AboutForm::AboutForm(QWidget *parent) : QWidget(parent)
 	// Heimdall Command Line
 	QObject::connect(&heimdallProcess, SIGNAL(readyRead()), this, SLOT(HandleHeimdallStdout()));
 	QObject::connect(&heimdallProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(HandleHeimdallReturned(int, QProcess::ExitStatus)));
-	QObject::connect(&heimdallProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(HandleHeimdallError(QProcess::ProcessError)));
+	QObject::connect(&heimdallProcess, SIGNAL(errorOccurred(QProcess::ProcessError)), this, SLOT(HandleHeimdallError(QProcess::ProcessError)));
 
 	heimdallFailed = false;
 
