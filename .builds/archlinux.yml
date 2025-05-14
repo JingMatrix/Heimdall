@@ -10,7 +10,7 @@ artifacts:
 packages:
   - cmake
   - libusb
-  - qt5-base
+  - qt6-base
 
 tasks:
   - build: |

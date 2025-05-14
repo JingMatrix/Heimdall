@@ -8,7 +8,7 @@ set(LIBPIT_INCLUDE_DIRS
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON) # moc files are generated in build (current) directory
 
-find_package(Qt5Widgets REQUIRED)
+find_package(Qt6Widgets REQUIRED)
 find_package(ZLIB REQUIRED)
 
 if(APPLE)
@@ -31,11 +31,11 @@ set(HEIMDALL_FRONTEND_SOURCE_FILES
     source/PackageData.cpp
     source/Packaging.cpp)
 
-qt5_wrap_ui(HEIMDALL_FRONTEND_FORMS
+qt6_wrap_ui(HEIMDALL_FRONTEND_FORMS
     mainwindow.ui
     aboutform.ui)
 
-qt5_add_resources(HEIMDALL_FRONTEND_RESOURCES
+qt6_add_resources(HEIMDALL_FRONTEND_RESOURCES
     mainwindow.qrc)
 
 add_executable(heimdall-frontend WIN32
@@ -81,7 +81,7 @@ set_property(TARGET heimdall-frontend
     APPEND PROPERTY COMPILE_DEFINITIONS "QT_LARGEFILE_SUPPORT")
 
 target_link_libraries(heimdall-frontend pit)
-target_link_libraries(heimdall-frontend Qt5::Widgets)
+target_link_libraries(heimdall-frontend Qt6::Widgets)
 target_link_libraries(heimdall-frontend z)
 install (TARGETS heimdall-frontend
         RUNTIME    DESTINATION ${CMAKE_INSTALL_PREFIX}/bin

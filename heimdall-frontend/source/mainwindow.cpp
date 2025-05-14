@@ -24,7 +24,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QProcess>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QUrl>
 
 // Heimdall Frontend
@@ -1083,9 +1083,9 @@ void MainWindow::BuildPackage(void)
 			if (packagePath.endsWith(".tar", Qt::CaseInsensitive))
 				packagePath.append(".gz");
 			else if (packagePath.endsWith(".gz", Qt::CaseInsensitive))
-				packagePath.replace(packagePath.length() - 3, ".tar.gz");
+				packagePath.replace(packagePath.length() - 3, 3, ".tar.gz");
 			else if (packagePath.endsWith(".tgz", Qt::CaseInsensitive))
-				packagePath.replace(packagePath.length() - 4, ".tar.gz");
+				packagePath.replace(packagePath.length() - 4, 4, ".tar.gz");
 			else
 				packagePath.append(".tar.gz");
 		}
@@ -1256,14 +1256,19 @@ void MainWindow::HandleHeimdallStdout(void)
 
 	// We often receive multiple lots of output from Heimdall at one time. So we use regular expressions
 	// to ensure we don't miss out on any important information.
-	QRegExp uploadingExp("Uploading [^\n]+\n");
-	if (output.lastIndexOf(uploadingExp) > -1)
-		flashLabel->setText(uploadingExp.cap().left(uploadingExp.cap().length() - 1));
-
-	QRegExp percentExp("[\b\n][0-9]+%");
-	if (output.lastIndexOf(percentExp) > -1)
+	QRegularExpression uploadingExp("Uploading [^\n]+\n");
+	QRegularExpressionMatch match = uploadingExp.match(output);
+	if (match.hasMatch())
 	{
-		QString percentString = percentExp.cap();
+		QString matchStr = match.captured(0);
+		flashLabel->setText(matchStr.left(matchStr.length() - 1));
+	}
+
+	QRegularExpression percentExp("[\b\n][0-9]+%");
+	match = percentExp.match(output);
+	if (match.hasMatch())
+	{
+		QString percentString = match.captured(0);
 		flashProgressBar->setValue(percentString.mid(1, percentString.length() - 2).toInt());
 	}
 

@@ -49,9 +49,9 @@ To only compile the CLI tool, add the option -DDISABLE_FRONTEND=true
 to the cmake command.
 
 The name of dependencies vary between distributions. On alpinelinux
-you need to install: `make cmake gcc g++ libc-dev qt5-qtbase-dev and
-libusb-dev`, on archlinux: `cmake libusb qt5-base` and on ubuntu: `cmake
-g++ pkg-config libusb-1.0.0-dev qtbase5-dev and zlib1g-dev`.
+you need to install: `make cmake gcc g++ libc-dev qt6-qtbase-dev and
+libusb-dev`, on archlinux: `cmake libusb qt6-base` and on ubuntu: `cmake
+g++ pkg-config libusb-1.0.0-dev qt6-base-dev and zlib1g-dev`.
 
 Some more documentation, and instructions on how to use Heimdall and
 Heimdall-frontend, can be found in the doc/ folder.

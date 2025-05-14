@@ -13,7 +13,7 @@ packages:
   - gcc
   - g++
   - libc-dev
-  - qt5-qtbase-dev
+  - qt6-qtbase-dev
   - libusb-dev
 
 tasks:

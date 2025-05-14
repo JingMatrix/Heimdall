@@ -33,6 +33,7 @@
 #include <QDir>
 #include <QProgressDialog>
 #include <QRandomGenerator>
+#include <QRegularExpression>
 
 // Heimdall Frontend
 #include "Alerts.h"
@@ -302,7 +303,7 @@ bool Packaging::WriteTarEntry(const QString& filePath, QTemporaryFile *tarFile, 
 
 	// Note: We don't support base-256 encoding. Support could be added later.
 	sprintf(tarHeader.fields.size, "%011llo", file.size());
-	sprintf(tarHeader.fields.modifiedTime, "%u", qtFileInfo.lastModified().toTime_t());
+	sprintf(tarHeader.fields.modifiedTime, "%llu", qtFileInfo.lastModified().toSecsSinceEpoch());
 		
 	// Regular File
 	tarHeader.fields.typeFlag = '0';
@@ -736,9 +737,10 @@ QString Packaging::ClashlessFilename(const QList<FileInfo>& fileInfos, int fileI
 				else
 					shortOtherFilename = otherFilename;
 
-				QRegExp renameExp("-[0-9]+");
+				QRegularExpression renameExp("-[0-9]+");
 
-				if (renameExp.lastIndexIn(shortOtherFilename) == shortFilename.length())
+				QRegularExpressionMatch match = renameExp.match(shortOtherFilename);
+				if (match.hasMatch() && match.capturedEnd(0) == shortFilename.length())
 				{
 					unsigned int trailingInteger = shortOtherFilename.mid(shortFilename.length() + 1).toUInt(&validIndexOffset);
 
@@ -867,9 +869,10 @@ QString Packaging::ClashlessFilename(const QList<FileInfo>& fileInfos, const QSt
 				else
 					shortOtherFilename = otherFilename;
 
-				QRegExp renameExp("-[0-9]+");
+				QRegularExpression renameExp("-[0-9]+");
 
-				if (renameExp.lastIndexIn(shortOtherFilename) == shortFilename.length())
+				QRegularExpressionMatch match = renameExp.match(shortOtherFilename);
+				if (match.hasMatch() && match.capturedEnd(0) == shortFilename.length())
 				{
 					unsigned int trailingInteger = shortOtherFilename.mid(shortFilename.length() + 1).toUInt(&validIndexOffset);
 

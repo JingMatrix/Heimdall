@@ -19,7 +19,7 @@
  THE SOFTWARE.*/
 
 // Qt
-#include "QRegExp"
+#include <QRegularExpression>
 
 // Heimdall Frontend
 #include "Alerts.h"
