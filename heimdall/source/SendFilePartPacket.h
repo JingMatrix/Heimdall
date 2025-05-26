@@ -46,7 +46,7 @@ namespace Heimdall
 
 				// min(fileSize, size)
 				unsigned long bytesToRead = (fileSize < size) ? fileSize - position : size;
-				(void)fread(data, 1, bytesToRead, file);
+				fread(data, 1, bytesToRead, file);
 			}
 
 			SendFilePartPacket(unsigned char *buffer, unsigned int size) : OutboundPacket(size)

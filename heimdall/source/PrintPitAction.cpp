@@ -142,7 +142,7 @@ int PrintPitAction::Execute(int argc, char **argv)
 
 		// Load the local pit file into memory.
 		unsigned char *pitFileBuffer = new unsigned char[localPitFileSize];
-		(void)fread(pitFileBuffer, 1, localPitFileSize, localPitFile);
+	        fread(pitFileBuffer, 1, localPitFileSize, localPitFile);
 		FileClose(localPitFile);
 
 		PitData *pitData = new PitData();
