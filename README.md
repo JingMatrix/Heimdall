@@ -1,17 +1,9 @@
 # Heimdall
 
-[![builds.sr.ht status](https://builds.sr.ht/~grimler/Heimdall/commits/ubuntu.yml.svg)](https://builds.sr.ht/~grimler/Heimdall/commits/ubuntu.yml?)
-[![builds.sr.ht status](https://builds.sr.ht/~grimler/Heimdall/commits/archlinux.yml.svg)](https://builds.sr.ht/~grimler/Heimdall/commits/archlinux.yml?)
-[![builds.sr.ht status](https://builds.sr.ht/~grimler/Heimdall/commits/alpine.yml.svg)](https://builds.sr.ht/~grimler/Heimdall/commits/alpine.yml?)
+[![build](https://github.com/JingMatrix/Heimdall/actions/workflows/build.yml/badge.svg)](https://github.com/JingMatrix/Heimdall/actions/workflows/build.yml)
 
 Heimdall is a cross-platform open-source tool suite used to flash
 firmware (aka ROMs) onto Samsung mobile devices.
-
-## Supported Platforms
-
-Heimdall should work on most Linux systems, and perhaps even on OSX
-and Windows, though the latter two are not tested by the current
-maintainer.
 
 ## How does Heimdall work?
 

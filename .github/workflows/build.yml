@@ -1,0 +1,89 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt -y install build-essential cmake zlib1g-dev libgl1-mesa-dev libusb-1.0-0-dev qt6-base-dev qt6-base-dev-tools
+
+    - name: Build
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_BUILD_TYPE=Release ..
+        make
+
+    - name: Upload Linux Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-builds
+        path: build/bin/
+
+  win-build:
+    runs-on: windows-latest
+
+    env:
+      VCPKG_BINARY_SOURCES: 'clear;files,${{ github.workspace }}/vcpkg_cache,readwrite'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Restore vcpkg cache
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ github.workspace }}/vcpkg_cache
+        key: vcpkg-
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: 6ecbbbdf31cba47aafa7cf6189b1e73e10ac61f8
+
+    - name: Build
+      shell: bash
+      run: |
+        mkdir build
+        cd build
+        cmake -G "Visual Studio 17 2022" -A x64 \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_TOOLCHAIN_FILE="${{ env.VCPKG_ROOT }}/scripts/buildsystems/vcpkg.cmake" \
+              ..
+        cmake --build . --config Release
+
+    - name: Save vcpkg cache
+      uses: actions/cache/save@v4
+      with:
+        path: ${{ github.workspace }}/vcpkg_cache
+        key: vcpkg-${{ hashFiles('vcpkg.json', 'CMakeLists.txt', '**/CMakeLists.txt') }}
+
+    - name: Find windeployqt.exe (DEBUG)
+      shell: powershell
+      run: |
+        echo "Searching for windeployqt.exe in VCPKG_ROOT..."
+        Get-ChildItem -Path ${{ env.VCPKG_ROOT }} -Recurse -Filter "windeployqt.exe" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+
+    - name: Deploy Qt Dependencies
+      shell: powershell
+      run: |
+        # Correctly using backslashes for PowerShell paths
+        $APP_DIR = "${{ github.workspace }}\build\bin\Release"
+        $QT_DEPLOY_TOOL = "${{ env.VCPKG_ROOT }}\packages\qtbase_x64-windows\tools\Qt6\bin\windeployqt.exe"
+
+        echo "Deploying dependencies for $APP_DIR\heimdall-frontend.exe"
+        & $QT_DEPLOY_TOOL "$APP_DIR\heimdall-frontend.exe"
+
+    - name: Upload Windows Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-builds
+        path: build/bin/Release/
