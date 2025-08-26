@@ -28,7 +28,7 @@ using namespace Heimdall;
 const char *InfoAction::usage = "Action: info\n\
 Description: Displays information about Heimdall.\n";
 
-int InfoAction::Execute(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
+int InfoAction::Execute([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
 {
 	Interface::PrintFullInfo();
 	return (0);

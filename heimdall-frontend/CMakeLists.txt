@@ -41,8 +41,6 @@ add_executable(heimdall-frontend WIN32
     ${HEIMDALL_FRONTEND_FORMS}
     ${HEIMDALL_FRONTEND_RESOURCES})
 
-target_compile_features(heimdall-frontend PRIVATE cxx_std_11)
-
 include(CheckSymbolExists)
 
 #
@@ -77,9 +75,7 @@ endif()
 set_property(TARGET heimdall-frontend
     APPEND PROPERTY COMPILE_DEFINITIONS "QT_LARGEFILE_SUPPORT")
 
-target_link_libraries(heimdall-frontend pit)
-target_link_libraries(heimdall-frontend Qt6::Widgets)
-target_link_libraries(heimdall-frontend z)
+target_link_libraries(heimdall-frontend pit Qt6::Widgets ZLIB::ZLIB)
 install (TARGETS heimdall-frontend
         RUNTIME    DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
         LIBRARY    DESTINATION ${CMAKE_INSTALL_LIBDIR}

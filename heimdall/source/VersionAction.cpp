@@ -28,7 +28,7 @@ using namespace Heimdall;
 const char *VersionAction::usage = "Action: version\n\
 Description: Displays the version number of this binary.\n";
 
-int VersionAction::Execute(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
+int VersionAction::Execute([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
 {
 	Interface::PrintVersion();
 	return (0);
